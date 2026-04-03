@@ -203,13 +203,15 @@
         }
 
         .hero-content {
-            position: relative;
+            position: absolute;
             z-index: 3;
             text-align: center;
             padding: 0 2rem;
-            max-width: 950px;
+            max-width: 800px;
             will-change: transform, opacity;
-            margin-top: -10vh;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
         }
 
         .hero-badge {
@@ -340,10 +342,6 @@
             top: 0;
             height: 100vh;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding-left: 8%;
         }
 
         .story-images {
@@ -373,23 +371,27 @@
         }
 
         .story-content {
-            position: relative;
+            position: absolute;
             z-index: 3;
-            max-width: 600px;
-            padding: 0 2rem;
+            left: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40%;
+            min-width: 380px;
         }
 
         .story-step {
-            position: absolute;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s var(--ease-out);
-            width: 100%;
+            display: none;
         }
 
         .story-step.active {
-            opacity: 1;
-            transform: translateY(0);
+            display: block;
+            animation: storyFadeIn 0.6s var(--ease-out);
+        }
+
+        @keyframes storyFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .story-step .section-label {
@@ -398,25 +400,23 @@
             text-transform: uppercase;
             color: var(--gold);
             font-weight: 600;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
 
         .story-step h2 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
             font-weight: 600;
             color: var(--white);
-            line-height: 1.25;
+            line-height: 1.2;
             margin-bottom: 1rem;
-            max-width: 500px;
         }
 
         .story-step p {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: rgba(255,255,255,0.6);
             line-height: 1.7;
             font-weight: 300;
-            max-width: 420px;
         }
 
         .story-counter {
@@ -1161,6 +1161,7 @@
             .filter-tabs { flex-wrap: wrap; }
             .gallery-item { width: 280px; height: 350px; }
             .story-counter { display: none; }
+            .story-content { width: 80%; min-width: unset; left: 5%; }
             .stat-number { font-size: 2.5rem; }
             .stats-bar { gap: 2rem; padding: 4rem 5%; }
         }
@@ -1674,9 +1675,9 @@
 
             // Content fades and moves up
             const contentOpacity = 1 - progress * 2.5;
-            const contentY = progress * -120;
+            const contentY = -55 + (progress * -10);
             heroContent.style.opacity = Math.max(0, contentOpacity);
-            heroContent.style.transform = `translateY(${contentY}px)`;
+            heroContent.style.transform = `translate(-50%, ${contentY}%)`;
 
             // Scroll indicator fades
             if (scrollIndicator) {
